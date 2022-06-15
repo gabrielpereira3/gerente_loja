@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gerente_loja/blocs/login_bloc.dart';
 import 'package:gerente_loja/widgets/input_field.dart';
@@ -48,7 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
           stream: _loginBloc.outState,
           initialData: LoginState.loading,
           builder: (context, snapshot) {
-            print(snapshot.data);
             switch (snapshot.data) {
               case LoginState.loading:
                 return const Center(
