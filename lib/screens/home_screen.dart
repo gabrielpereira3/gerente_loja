@@ -1,5 +1,8 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:gerente_loja/tabs/users_tab.dart';
+
+import '../blocs/user_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,11 +15,14 @@ class _HomeScreenState extends State<HomeScreen> {
   PageController? _pageController;
   int _page = 0;
 
+  UserBloc? _userBloc;
+
   @override
   void initState() {
     super.initState();
 
     _pageController = PageController();
+    _userBloc = UserBloc();
   }
 
   @override
