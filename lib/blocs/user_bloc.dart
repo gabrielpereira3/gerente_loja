@@ -1,4 +1,4 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -9,7 +9,7 @@ class UserBloc extends BlocBase {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  UserBloc() {
+  UserBloc() : super(null) {
     _addUsersListener();
   }
 
@@ -70,7 +70,6 @@ class UserBloc extends BlocBase {
 
   @override
   void dispose() {
-    super.dispose();
     _usersController.close();
   }
 }

@@ -1,10 +1,9 @@
 import 'dart:async';
-
-import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gerente_loja/validators/login_validators.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum LoginState { idle, loading, success, fail }
 
@@ -29,7 +28,7 @@ class LoginBloc extends BlocBase with LoginValidators {
 
   late StreamSubscription _streamSubscription;
 
-  LoginBloc() {
+  LoginBloc() : super(null) {
     _streamSubscription = FirebaseAuth.instance.authStateChanges().listen((user) async {
       if(user != null){
         if(await verifyPrivileges(user)){
@@ -73,7 +72,6 @@ class LoginBloc extends BlocBase with LoginValidators {
 
   @override
   void dispose() {
-    super.dispose();
     _emailController.close();
     _passwordController.close();
     _stateController.close();
