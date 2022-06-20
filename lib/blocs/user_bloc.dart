@@ -3,9 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserBloc extends BlocBase {
-  final _usersController = BehaviorSubject();
+  final _usersController = BehaviorSubject<List>();
 
-  Map<String, Map<String, dynamic>> _users = {};
+  Stream<List> get outUsers => _usersController.stream;
+
+  final Map<String, Map<String, dynamic>> _users = {};
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -68,8 +70,4 @@ class UserBloc extends BlocBase {
     _users[uid]!["subscription"].cancel();
   }
 
-  @override
-  void dispose() {
-    _usersController.close();
-  }
 }
