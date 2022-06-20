@@ -61,6 +61,7 @@ class UserBloc extends BlocBase {
         .collection("orders")
         .snapshots()
         .listen((orders) async {
+
       int numOrders = orders.docs.length;
 
       double money = 0.0;
@@ -68,8 +69,6 @@ class UserBloc extends BlocBase {
       for (DocumentSnapshot d in orders.docs) {
         DocumentSnapshot order =
             await _firestore.collection("orders").doc(d.id).get();
-
-        if(order.data == null) continue;
 
         money += order["totalPrice"];
       }
@@ -80,6 +79,10 @@ class UserBloc extends BlocBase {
 
       _usersController.add(_users.values.toList());
     });
+  }
+
+  Map<String, dynamic> getUser(String uid) {
+    return _users[uid]!;
   }
 
   void _unsubscribeToOrders(String uid){

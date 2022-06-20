@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:gerente_loja/tabs/users_tab.dart';
+import '../blocs/orders_bloc.dart';
 import '../blocs/user_bloc.dart';
+import '../tabs/orders_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _page = 0;
 
   UserBloc? _userBloc;
+  OrdersBloc? _ordersBloc;
 
   @override
   void initState() {
@@ -22,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _pageController = PageController();
     _userBloc = UserBloc();
+    _ordersBloc = OrdersBloc();
   }
 
   @override
@@ -67,22 +71,23 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: BlocProvider(
           create: (_) => UserBloc(),
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (page) {
-              setState(() {
-                _page = page;
-              });
-            },
-            children: [
-              const UsersTab(),
-              Container(
-                color: Colors.yellowAccent,
-              ),
-              Container(
-                color: Colors.greenAccent,
-              ),
-            ],
+          child: BlocProvider(
+            create: (_) => OrdersBloc(),
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (page) {
+                setState(() {
+                  _page = page;
+                });
+              },
+              children: [
+                const UsersTab(),
+                const OrdersTab(),
+                Container(
+                  color: Colors.greenAccent,
+                ),
+              ],
+            ),
           ),
         ),
       ),
