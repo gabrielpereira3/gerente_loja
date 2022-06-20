@@ -22,10 +22,13 @@ class OrderTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Card(
         child: ExpansionTile(
+          key: Key(order.id),
+          initiallyExpanded: order["status"] != 4,
           title: Text(
             "#${order.id.substring(order.id.length - 7, order.id.length)} - "
-                "${states[order["status"]]}",
-            style: TextStyle(color: order["status"] != 4 ? Colors.grey[850] : Colors.green),
+            "${states[order["status"]]}",
+            style: TextStyle(
+                color: order["status"] != 4 ? Colors.grey[850] : Colors.green),
           ),
           children: [
             Padding(
@@ -53,24 +56,50 @@ class OrderTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(order["clientId"])
+                              .collection("orders")
+                              .doc(order.id)
+                              .delete();
+                          order.reference.delete();
+                        },
                         child: const Text(
                           "Excluir",
                           style: TextStyle(color: Colors.red),
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: order["status"] > 1
+                            ? () {
+                                order.reference
+                                    .update({"status": order["status"] - 1});
+                              }
+                            : null,
                         child: Text(
                           "Regredir",
-                          style: TextStyle(color: Colors.grey[850]),
+                          style: TextStyle(
+                            color: order["status"] > 1
+                                ? Colors.grey[850]
+                                : Colors.grey,
+                          ),
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
-                        child: const Text(
+                        onPressed: order["status"] < 4
+                            ? () {
+                                order.reference
+                                    .update({"status": order["status"] + 1});
+                              }
+                            : null,
+                        child: Text(
                           "Avançar",
-                          style: TextStyle(color: Colors.green),
+                          style: TextStyle(
+                            color: order["status"] < 4
+                                ? Colors.green
+                                : Colors.grey,
+                          ),
                         ),
                       ),
                     ],
