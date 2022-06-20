@@ -9,15 +9,15 @@ class UsersTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _userBloc = BlocProvider.of<UserBloc>(context);
+    final userBloc = BlocProvider.of<UserBloc>(context);
 
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
           child: TextField(
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.white),
+            decoration: const InputDecoration(
               icon: Icon(
                 Icons.search,
                 color: Colors.white,
@@ -26,11 +26,12 @@ class UsersTab extends StatelessWidget {
               hintStyle: TextStyle(color: Colors.white),
               border: InputBorder.none,
             ),
+            onChanged: userBloc.onChangedSearch,
           ),
         ),
         Expanded(
           child: StreamBuilder<List>(
-              stream: _userBloc.outUsers,
+              stream: userBloc.outUsers,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
@@ -42,7 +43,7 @@ class UsersTab extends StatelessWidget {
                   return const Center(
                     child: Text(
                       "Nenhum usuário encontrado!",
-                      style: TextStyle(color: Colors.pinkAccent),
+                      style: TextStyle(color: Colors.pinkAccent, fontSize: 25),
                     ),
                   );
                 } else {
