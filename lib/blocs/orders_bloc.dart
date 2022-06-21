@@ -80,6 +80,6 @@ class OrdersBloc extends BlocBase {
         break;
     }
 
-    _ordersController.add(_orders);
+    _ordersController.sink.add(_orders);
   }
 }

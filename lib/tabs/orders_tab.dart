@@ -3,9 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gerente_loja/blocs/orders_bloc.dart';
 import '../widgets/order_tile.dart';
 
-class OrdersTab extends StatelessWidget {
+class OrdersTab extends StatefulWidget {
   const OrdersTab({Key? key}) : super(key: key);
 
+  @override
+  State<OrdersTab> createState() => _OrdersTabState();
+}
+
+class _OrdersTabState extends State<OrdersTab> {
   @override
   Widget build(BuildContext context) {
     final ordersBloc = BlocProvider.of<OrdersBloc>(context);

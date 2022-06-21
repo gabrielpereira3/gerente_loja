@@ -117,8 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
               label: "Concluídos abaixo",
               labelStyle: const TextStyle(fontSize: 14),
               onTap: () {
-                _ordersBloc!.setOrderCriteria(SortCriteria.readyLast);
-                setState(() {});
+                setState(() {
+                  _ordersBloc!.setOrderCriteria(SortCriteria.readyLast);
+                });
               },
             ),
             SpeedDialChild(
@@ -130,8 +131,9 @@ class _HomeScreenState extends State<HomeScreen> {
               label: "Concluídos acima",
               labelStyle: const TextStyle(fontSize: 14),
               onTap: () {
-                _ordersBloc!.setOrderCriteria(SortCriteria.readyFirst);
-                setState(() {});
+                setState(() {
+                  _ordersBloc!.setOrderCriteria(SortCriteria.readyFirst);
+                });
               },
             ),
           ],
