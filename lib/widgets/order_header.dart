@@ -12,9 +12,9 @@ class OrderHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _userBloc = BlocProvider.of<UserBloc>(context);
+    final userBloc = BlocProvider.of<UserBloc>(context);
 
-    final _user = _userBloc.getUser(order["clientId"]);
+    final user = userBloc.getUser(order["clientId"]);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,8 +23,8 @@ class OrderHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("${_user["name"]}"),
-              Text("${_user["address"]}"),
+              Text("${user["name"]}"),
+              Text("${user["address"]}"),
             ],
           ),
         ),

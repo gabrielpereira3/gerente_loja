@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:gerente_loja/tabs/users_tab.dart';
 import '../blocs/orders_bloc.dart';
 import '../blocs/user_bloc.dart';
@@ -70,27 +71,74 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
         child: BlocProvider(
+          lazy: false,
           create: (_) => UserBloc(),
           child: BlocProvider(
+            lazy: false,
             create: (_) => OrdersBloc(),
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (page) {
-                setState(() {
-                  _page = page;
-                });
-              },
-              children: [
-                const UsersTab(),
-                const OrdersTab(),
-                Container(
-                  color: Colors.greenAccent,
-                ),
-              ],
-            ),
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (page) {
+                  setState(() {
+                    _page = page;
+                  });
+                },
+                children: [
+                  const UsersTab(),
+                  const OrdersTab(),
+                  Container(
+                    color: Colors.greenAccent,
+                  ),
+                ],
+              ),
           ),
         ),
       ),
+      floatingActionButton: _buildFloating(),
     );
+  }
+
+  Widget? _buildFloating() {
+    switch (_page) {
+      case 0:
+        return null;
+      case 1:
+        return SpeedDial(
+          backgroundColor: Colors.pinkAccent,
+          overlayOpacity: 0.4,
+          overlayColor: Colors.black,
+          children: [
+            SpeedDialChild(
+              child: const Icon(
+                Icons.arrow_downward,
+                color: Colors.pinkAccent,
+              ),
+              backgroundColor: Colors.white,
+              label: "Concluídos abaixo",
+              labelStyle: const TextStyle(fontSize: 14),
+              onTap: () {
+                _ordersBloc!.setOrderCriteria(SortCriteria.readyLast);
+                setState(() {});
+              },
+            ),
+            SpeedDialChild(
+              child: const Icon(
+                Icons.arrow_upward,
+                color: Colors.pinkAccent,
+              ),
+              backgroundColor: Colors.white,
+              label: "Concluídos acima",
+              labelStyle: const TextStyle(fontSize: 14),
+              onTap: () {
+                _ordersBloc!.setOrderCriteria(SortCriteria.readyFirst);
+                setState(() {});
+              },
+            ),
+          ],
+          child: const Icon(Icons.sort),
+        );
+      default:
+        return Container();
+    }
   }
 }
