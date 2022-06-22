@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:gerente_loja/tabs/products_tab.dart';
 import 'package:gerente_loja/tabs/users_tab.dart';
 import '../blocs/orders_bloc.dart';
 import '../blocs/user_bloc.dart';
@@ -83,12 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     _page = page;
                   });
                 },
-                children: [
-                  const UsersTab(),
-                  const OrdersTab(),
-                  Container(
-                    color: Colors.greenAccent,
-                  ),
+                children: const [
+                  UsersTab(),
+                  OrdersTab(),
+                  ProductsTab(),
                 ],
               ),
           ),

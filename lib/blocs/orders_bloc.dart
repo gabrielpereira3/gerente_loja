@@ -6,9 +6,9 @@ enum SortCriteria {readyFirst, readyLast}
 
 class OrdersBloc extends BlocBase {
 
-  final _ordersController = BehaviorSubject<List>();
+  final ordersController = BehaviorSubject<List>();
 
-  Stream<List> get outOrders => _ordersController.stream;
+  Stream<List> get outOrders => ordersController.stream;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -80,6 +80,6 @@ class OrdersBloc extends BlocBase {
         break;
     }
 
-    _ordersController.sink.add(_orders);
+    ordersController.add(_orders);
   }
 }

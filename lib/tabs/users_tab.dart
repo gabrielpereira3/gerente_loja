@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gerente_loja/widgets/user_tile.dart';
-
 import '../blocs/user_bloc.dart';
 
 class UsersTab extends StatelessWidget {
